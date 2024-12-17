@@ -42,6 +42,19 @@
                 <span>Data Mata Kuliah</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin/pembayaran'); ?>">
+                <i class="fas fa-money-bill"></i>
+                <span>Data Pembayaran</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin/pengumuman'); ?>">
+                <i class="fas fa-bullhorn"></i>
+                <span>Data Pengumuman</span>
+            </a>
+        </li>
+
     <?php elseif ($this->session->userdata('role') == 'mahasiswa') : ?>
         <!-- Mahasiswa Links -->
         <li class="nav-item">
