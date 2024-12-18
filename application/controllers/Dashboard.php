@@ -55,9 +55,9 @@ class Dashboard extends CI_Controller
     {
         // Data jadwal mengajar dan tugas untuk dosen
         $data['title'] = 'Dashboard Dosen';
-        $data['jadwal_mengajar'] = $this->db->get_where('jadwal_mengajar', [
-            'dosen_id' => $this->session->userdata('id')
-        ])->result();
+        // $data['jadwal_mengajar'] = $this->db->get_where('jadwal_mengajar', [
+        //     'dosen_id' => $this->session->userdata('id')
+        // ])->result();
         $data['pengumuman'] = $this->db->get('pengumuman')->result();
 
         // Oper data langsung ke layout dan content

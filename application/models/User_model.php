@@ -7,10 +7,7 @@ class User_model extends CI_Model
     // Ambil data pengguna berdasarkan username
     public function get_by_username($username)
     {
-        $this->db->where('username', $username);
-        $query = $this->db->get('users');
-        echo $this->db->last_query(); // Debug query
-        return $query->row();
+        return $this->db->get_where('users', ['username' => $username])->row();
     }
 
     // Ambil data pengguna berdasarkan ID

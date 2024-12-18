@@ -8,6 +8,7 @@ class Dosen extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Dosen_model');
+        $this->load->model('User_model');
     }
 
     // Menampilkan daftar dosen
@@ -23,6 +24,7 @@ class Dosen extends CI_Controller
     public function create()
     {
         if ($this->input->post()) {
+            // Data Dosen
             $data = [
                 'nidn' => $this->input->post('nidn'),
                 'nama' => $this->input->post('nama'),
@@ -31,19 +33,29 @@ class Dosen extends CI_Controller
                 'alamat' => $this->input->post('alamat'),
             ];
 
-            if ($this->Dosen_model->check_nidn_exists($data['nidn'])) {
-                $this->session->set_flashdata('error', 'NIDN sudah terdaftar!');
-            } else {
-                $this->Dosen_model->create($data);
-                $this->session->set_flashdata('success', 'Dosen berhasil ditambahkan!');
-            }
+            // Insert ke tabel dosen
+            $inserted = $this->Dosen_model->insert($data);
 
+            // Jika berhasil, insert juga ke tabel users
+            if ($inserted) {
+                $user_data = [
+                    'username' => $data['nidn'], // NIDN sebagai username
+                    'password' => password_hash('pwd123', PASSWORD_DEFAULT), // Default password
+                    'role' => 'dosen'
+                ];
+                $this->User_model->insert($user_data);
+
+                $this->session->set_flashdata('success', 'Dosen berhasil ditambahkan.');
+            } else {
+                $this->session->set_flashdata('error', 'Gagal menambahkan dosen.');
+            }
             redirect('admin/dosen');
         }
 
         $data['title'] = 'Tambah Dosen';
         $this->load->view('layouts/main', array_merge($data, ['content' => 'admin/dosen/create']));
     }
+
 
     public function edit($id)
     {
