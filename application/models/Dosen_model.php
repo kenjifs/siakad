@@ -17,7 +17,7 @@ class Dosen_model extends CI_Model
     }
 
     // Tambahkan data dosen
-    public function create($data)
+    public function insert($data)
     {
         return $this->db->insert('dosen', $data);
     }

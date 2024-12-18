@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pembayaran extends CI_Controller
+class Nilai extends CI_Controller
 {
 
     public function __construct()
@@ -16,9 +16,9 @@ class Pembayaran extends CI_Controller
     public function index()
     {
         $mahasiswa_id = $this->session->userdata('mahasiswa_id');
-        $data['title'] = 'Status Pembayaran';
-        $data['pembayaran'] = $this->Mahasiswa_model->get_pembayaran_by_mahasiswa($mahasiswa_id);
+        $data['title'] = 'Nilai Mahasiswa';
+        $data['nilai'] = $this->Mahasiswa_model->get_nilai($mahasiswa_id);
 
-        $this->load->view('layouts/main', array_merge($data, ['content' => 'mahasiswa/pembayaran']));
+        $this->load->view('layouts/main', array_merge($data, ['content' => 'mahasiswa/nilai']));
     }
 }

@@ -58,9 +58,27 @@
     <?php elseif ($this->session->userdata('role') == 'mahasiswa') : ?>
         <!-- Mahasiswa Links -->
         <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('mahasiswa/pengumuman'); ?>">
+                <i class="fas fa-bullhorn"></i>
+                <span>Pengumuman</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('mahasiswa/profile'); ?>">
+                <i class="fas fa-user"></i>
+                <span>Profil</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="<?= base_url('mahasiswa/jadwal'); ?>">
                 <i class="fas fa-calendar"></i>
                 <span>Jadwal Kuliah</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('mahasiswa/nilai'); ?>">
+                <i class="fas fa-chart-bar"></i>
+                <span>Nilai Mahasiswa</span>
             </a>
         </li>
         <li class="nav-item">

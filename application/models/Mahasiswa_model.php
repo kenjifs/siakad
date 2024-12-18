@@ -17,7 +17,7 @@ class Mahasiswa_model extends CI_Model
     }
 
     // Tambahkan data mahasiswa baru
-    public function create($data)
+    public function insert($data)
     {
         return $this->db->insert('mahasiswa', $data);
     }
@@ -40,5 +40,37 @@ class Mahasiswa_model extends CI_Model
     public function check_nim_exists($nim)
     {
         return $this->db->get_where('mahasiswa', ['nim' => $nim])->row();
+    }
+
+    // Ambil jadwal kuliah mahasiswa berdasarkan mahasiswa_id
+    public function get_jadwal_kuliah($mahasiswa_id)
+    {
+        $this->db->select('jadwal_kuliah.*, mata_kuliah.nama_mk, mata_kuliah.sks');
+        $this->db->from('jadwal_kuliah');
+        $this->db->join('mata_kuliah', 'mata_kuliah.id = jadwal_kuliah.mata_kuliah_id');
+        $this->db->where('jadwal_kuliah.mahasiswa_id', $mahasiswa_id);
+        return $this->db->get()->result();
+    }
+
+    // Ambil nilai mahasiswa berdasarkan mahasiswa_id
+    public function get_nilai($mahasiswa_id)
+    {
+        $this->db->select('nilai.*, mata_kuliah.nama_mk, mata_kuliah.sks');
+        $this->db->from('nilai');
+        $this->db->join('mata_kuliah', 'mata_kuliah.id = nilai.mata_kuliah_id');
+        $this->db->where('nilai.mahasiswa_id', $mahasiswa_id);
+        return $this->db->get()->result();
+    }
+
+    // Ambil pengumuman terbaru
+    public function get_pengumuman()
+    {
+        $this->db->order_by('tanggal', 'DESC');
+        return $this->db->get('pengumuman')->result();
+    }
+
+    public function get_pembayaran_by_mahasiswa($mahasiswa_id)
+    {
+        return $this->db->get_where('pembayaran', ['mahasiswa_id' => $mahasiswa_id])->result();
     }
 }
