@@ -34,4 +34,9 @@ class Pembayaran_model extends CI_Model
         $this->db->where('tagihan.id', $id);
         return $this->db->get()->row();
     }
+
+    public function insert($data)
+    {
+        return $this->db->insert('pembayaran', $data);
+    }
 }
