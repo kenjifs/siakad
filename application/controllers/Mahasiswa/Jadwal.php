@@ -7,7 +7,10 @@ class Jadwal extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Mahasiswa_model');
+        $this->load->model('Jadwal_model');
+        $this->load->library('session');
+
+        // Cek apakah user yang login adalah mahasiswa
         if ($this->session->userdata('role') != 'mahasiswa') {
             redirect('auth/login');
         }
@@ -15,9 +18,9 @@ class Jadwal extends CI_Controller
 
     public function index()
     {
-        $mahasiswa_id = $this->session->userdata('mahasiswa_id');
+        $mahasiswa_id = $this->session->userdata('user_id');
         $data['title'] = 'Jadwal Kuliah';
-        $data['jadwal_kuliah'] = $this->Mahasiswa_model->get_jadwal_kuliah($mahasiswa_id);
+        $data['jadwal'] = $this->Jadwal_model->get_by_mahasiswa($mahasiswa_id);
 
         $this->load->view('layouts/main', array_merge($data, ['content' => 'mahasiswa/jadwal']));
     }
