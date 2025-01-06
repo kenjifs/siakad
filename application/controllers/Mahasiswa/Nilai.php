@@ -7,7 +7,10 @@ class Nilai extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Mahasiswa_model');
+        $this->load->model('Nilai_model');
+        $this->load->library('session');
+
+        // Cek apakah user yang login adalah mahasiswa
         if ($this->session->userdata('role') != 'mahasiswa') {
             redirect('auth/login');
         }
@@ -15,9 +18,9 @@ class Nilai extends CI_Controller
 
     public function index()
     {
-        $mahasiswa_id = $this->session->userdata('mahasiswa_id');
+        $mahasiswa_id = $this->session->userdata('user_id');
         $data['title'] = 'Nilai Mahasiswa';
-        $data['nilai'] = $this->Mahasiswa_model->get_nilai($mahasiswa_id);
+        $data['nilai'] = $this->Nilai_model->get_by_mahasiswa($mahasiswa_id);
 
         $this->load->view('layouts/main', array_merge($data, ['content' => 'mahasiswa/nilai']));
     }

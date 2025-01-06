@@ -40,16 +40,27 @@ class Dashboard extends CI_Controller
 
     private function mahasiswa_dashboard()
     {
-        // Data jadwal kuliah dan pengumuman untuk mahasiswa
+        $mahasiswa_id = $this->session->userdata('user_id'); // Ambil ID mahasiswa dari session
+        if (!$mahasiswa_id) {
+            show_error('ID mahasiswa tidak ditemukan di session.');
+        }
+
+        // Data untuk dashboard mahasiswa
         $data['title'] = 'Dashboard Mahasiswa';
         $data['jadwal_kuliah'] = $this->db->get_where('jadwal_kuliah', [
-            'mahasiswa_id' => $this->session->userdata('id')
+            'mahasiswa_id' => $mahasiswa_id
         ])->result();
-        $data['pengumuman'] = $this->db->get('pengumuman')->result();
+
+        $data['pengumuman'] = $this->db->order_by('tanggal', 'DESC')->get('pengumuman')->result();
+
+        // Ambil data nilai mahasiswa
+        $this->load->model('Nilai_model');
+        $data['nilai'] = $this->Nilai_model->get_by_mahasiswa($mahasiswa_id);
 
         // Oper data langsung ke layout dan content
         $this->load->view('layouts/main', $data + ['content' => 'dashboard/mahasiswa']);
     }
+
 
     private function dosen_dashboard()
     {

@@ -1,7 +1,7 @@
 <h3>Pengumuman Terbaru</h3>
 <ul class="list-group">
     <?php foreach ($pengumuman as $p) : ?>
-        <li class="list-group-item">
+        <li class="list-group-item mb-3">
             <strong><?= $p->judul; ?></strong><br>
             <?= $p->isi; ?><br>
             <small class="text-muted">Tanggal: <?= date('d M Y', strtotime($p->tanggal)); ?></small>
