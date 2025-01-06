@@ -87,6 +87,33 @@
                 <span>Pembayaran</span>
             </a>
         </li>
+    <?php elseif ($this->session->userdata('role') == 'dosen') : ?>
+        <!-- Dosen Links -->
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('dosen/pengumuman'); ?>">
+                <i class="fas fa-bullhorn"></i>
+                <span>Pengumuman</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('dosen/profile'); ?>">
+                <i class="fas fa-user"></i>
+                <span>Profil</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('dosen/jadwal'); ?>">
+                <i class="fas fa-calendar"></i>
+                <span>Jadwal Mengajar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('dosen/tugas'); ?>">
+                <i class="fas fa-chart-bar"></i>
+                <span>Tugas</span>
+            </a>
+        </li>
+
     <?php endif; ?>
 
     <!-- Logout -->
