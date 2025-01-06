@@ -64,14 +64,22 @@ class Dashboard extends CI_Controller
 
     private function dosen_dashboard()
     {
-        // Data jadwal mengajar dan tugas untuk dosen
-        $data['title'] = 'Dashboard Dosen';
-        // $data['jadwal_mengajar'] = $this->db->get_where('jadwal_mengajar', [
-        //     'dosen_id' => $this->session->userdata('id')
-        // ])->result();
-        $data['pengumuman'] = $this->db->get('pengumuman')->result();
+        $dosen_id = $this->session->userdata('user_id'); // Ambil ID dosen dari session
+        if (!$dosen_id) {
+            show_error('ID dosen tidak ditemukan di session.');
+        }
 
-        // Oper data langsung ke layout dan content
-        $this->load->view('layouts/main', $data + ['content' => 'dashboard/dosen']);
+        // Ambil data untuk dashboard dosen
+        $this->load->model('Pengumuman_model');
+        $this->load->model('JadwalMengajar_model');
+        $this->load->model('Tugas_model');
+
+        $data['title'] = 'Dashboard Dosen';
+        $data['pengumuman'] = $this->Pengumuman_model->get_all(); // Ambil semua pengumuman
+        $data['jadwal_mengajar'] = $this->JadwalMengajar_model->get_by_dosen($dosen_id); // Ambil jadwal mengajar
+        $data['tugas'] = $this->Tugas_model->get_by_dosen($dosen_id); // Ambil tugas dosen
+
+        // Tampilkan view
+        $this->load->view('layouts/main', array_merge($data, ['content' => 'dashboard/dosen']));
     }
 }

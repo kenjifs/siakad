@@ -3,11 +3,13 @@
     <hr>
     <h4>Pengumuman</h4>
     <?php if (!empty($pengumuman)) : ?>
-        <ul>
-            <?php foreach ($pengumuman as $p) : ?>
-                <li><strong><?= $p->judul; ?></strong>: <?= $p->isi; ?></li>
-            <?php endforeach; ?>
-        </ul>
+        <?php foreach ($pengumuman as $p) : ?>
+            <li class="list-group-item mb-3">
+                <strong><?= $p->judul; ?></strong><br>
+                <?= $p->isi; ?><br>
+                <small class="text-muted">Tanggal: <?= date('d M Y', strtotime($p->tanggal)); ?></small>
+            </li>
+        <?php endforeach; ?>
     <?php else : ?>
         <div class="alert alert-info">Belum ada pengumuman.</div>
     <?php endif; ?>
